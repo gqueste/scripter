@@ -286,10 +286,9 @@ document.getElementById('files').addEventListener('change', handleFileSelect, fa
 TODO :
 * Suppr / del ?? (questionnement fonctionnel)
 * Pimp out print
-* mettre ça sur GitHub
-* Ctrl + S pour save JSON file
+* Ctrl + S to save JSON file
 * autoCompletion character name
 * anchors for navigation on subtitle and title
-* Indication to say what we are focusing / editing (placeholder / color / tooltip ??)
+* Situational help to know what Enter and Ctrl+Enter will do
 * Localisation ???
 */
