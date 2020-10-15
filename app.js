@@ -28,6 +28,7 @@ const createDialogElement = text => {
     newElement.contentEditable = true;
     newElement.className = 'dialog';
     newElement.innerText = text;
+    newElement.setAttribute('data-placeholder', 'Dialog');
     return newElement;
 }
 

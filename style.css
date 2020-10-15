@@ -38,6 +38,12 @@ body {
     text-decoration: underline;
 }
 
+.dialog:empty::before {
+    content: attr(data-placeholder);
+    display: inline-block;
+    color: #9c9494;
+}
+
 
 @media print
 {    
