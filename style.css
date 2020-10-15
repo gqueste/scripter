@@ -6,6 +6,12 @@ body {
     background-color: darkgrey;
 }
 
+*[contenteditable]:empty::before {
+    content: attr(data-placeholder);
+    display: inline-block;
+    color: #9c9494;
+}
+
 .page {
     width: 100%;
     min-height: -webkit-fill-available;
@@ -36,12 +42,6 @@ body {
 .sound {
     text-transform: uppercase;
     text-decoration: underline;
-}
-
-.dialog:empty::before {
-    content: attr(data-placeholder);
-    display: inline-block;
-    color: #9c9494;
 }
 
 

@@ -4,6 +4,7 @@ const createTitleElement = text => {
     newElement.contentEditable = true;
     newElement.className = 'title';
     newElement.innerText = text;
+    newElement.setAttribute('data-placeholder', 'Title');
     return newElement;
 }
 
@@ -12,6 +13,7 @@ const createSubtitleElement = text => {
     newElement.contentEditable = true;
     newElement.className = 'subtitle';
     newElement.innerText = text;
+    newElement.setAttribute('data-placeholder', 'Subtitle');
     return newElement;
 }
 
@@ -20,6 +22,7 @@ const createCharacterElement = text => {
     newElement.contentEditable = true;
     newElement.className = 'character';
     newElement.innerText = text;
+    newElement.setAttribute('data-placeholder', 'Character');
     return newElement;
 }
 
@@ -43,6 +46,7 @@ const createSoundElement = text => {
     const editableSound = document.createElement('span');
     editableSound.contentEditable = true;
     editableSound.innerText = text;
+    editableSound.setAttribute('data-placeholder', 'Sound');
     newElement.appendChild(editableSound);
     return newElement;
 }
@@ -58,6 +62,7 @@ const createCommentElement = text => {
     const editableComment = document.createElement('span');
     editableComment.contentEditable = true;
     editableComment.innerText = text;
+    editableComment.setAttribute('data-placeholder', 'Comment');
     newElement.appendChild(editableComment);
 
     const rightPar = document.createElement('span');
