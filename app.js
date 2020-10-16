@@ -1,77 +1,5 @@
-/* CREATION ELEMENTS */
-const createTitleElement = text => {
-    const newElement = document.createElement('p');
-    newElement.contentEditable = true;
-    newElement.className = 'title';
-    newElement.innerText = text;
-    newElement.setAttribute('data-placeholder', 'Title');
-    return newElement;
-}
-
-const createSubtitleElement = text => {
-    const newElement = document.createElement('p');
-    newElement.contentEditable = true;
-    newElement.className = 'subtitle';
-    newElement.innerText = text;
-    newElement.setAttribute('data-placeholder', 'Subtitle');
-    return newElement;
-}
-
-const createCharacterElement = text => {
-    const newElement = document.createElement('p');
-    newElement.contentEditable = true;
-    newElement.className = 'character';
-    newElement.innerText = text;
-    newElement.setAttribute('data-placeholder', 'Character');
-    return newElement;
-}
-
-const createDialogElement = text => {
-    const newElement = document.createElement('p');
-    newElement.contentEditable = true;
-    newElement.className = 'dialog';
-    newElement.innerText = text;
-    newElement.setAttribute('data-placeholder', 'Dialog');
-    return newElement;
-}
-
-const createSoundElement = text => {
-    const newElement = document.createElement('p');
-    newElement.className = 'sound';
-                        
-    const soundElement = document.createElement('span');
-    soundElement.innerText = 'SOUND: ';
-    newElement.appendChild(soundElement);
-
-    const editableSound = document.createElement('span');
-    editableSound.contentEditable = true;
-    editableSound.innerText = text;
-    editableSound.setAttribute('data-placeholder', 'Sound');
-    newElement.appendChild(editableSound);
-    return newElement;
-}
-
-const createCommentElement = text => {
-    const newElement = document.createElement('p');
-    newElement.className = 'comment';
-                    
-    const leftPar = document.createElement('span');
-    leftPar.innerText = '(';
-    newElement.appendChild(leftPar);
-
-    const editableComment = document.createElement('span');
-    editableComment.contentEditable = true;
-    editableComment.innerText = text;
-    editableComment.setAttribute('data-placeholder', 'Comment');
-    newElement.appendChild(editableComment);
-
-    const rightPar = document.createElement('span');
-    rightPar.innerText = ')';
-    newElement.appendChild(rightPar);
-
-    return newElement;
-}
-
+import { setEndOfContenteditable } from './utils/helpers.js';
+import { createCharacterElement, createCommentElement, createDialogElement, createSoundElement, createSubtitleElement, createTitleElement } from './components/Elements.js';
 
 const addCharacter = (srcElement, text = '') => {
     const newElement = createCharacterElement(text);
@@ -197,27 +125,7 @@ const handleBackspaceKeyPress = event => {
         const previousFocusableElement = previousElement.contentEditable === 'true' ? previousElement : [...previousElement.children].filter(c => c.contentEditable === 'true')[0];
         previousFocusableElement.focus();
         setEndOfContenteditable(previousFocusableElement);
-    }
-}
-
-function setEndOfContenteditable(contentEditableElement)
-{
-    var range,selection;
-    if(document.createRange)//Firefox, Chrome, Opera, Safari, IE 9+
-    {
-        range = document.createRange();//Create a range (a range is a like the selection but invisible)
-        range.selectNodeContents(contentEditableElement);//Select the entire contents of the element with the range
-        range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
-        selection = window.getSelection();//get the selection object (allows you to change selection)
-        selection.removeAllRanges();//remove any selections already made
-        selection.addRange(range);//make the range you have just created the visible selection
-    }
-    else if(document.selection)//IE 8 and lower
-    { 
-        range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
-        range.moveToElementText(contentEditableElement);//Select the entire contents of the element with the range
-        range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
-        range.select();//Select the range (make it the visible selection
+        // TODO Bug si supprime la première ligne et que y a rien au dessus
     }
 }
 
@@ -326,11 +234,11 @@ document.addEventListener('keydown', event => {
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 /*
 TODO :
-* Suppr / del ?? (questionnement fonctionnel)
 * Pimp out print
 * Ctrl + S to save JSON file
 * autoCompletion character name
 * anchors for navigation on subtitle and title
 * Situational help to know what Enter and Ctrl+Enter will do
 * Localisation ???
+* Settings
 */
