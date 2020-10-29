@@ -1,43 +1,18 @@
 import { setEndOfContenteditable } from './utils/helpers.js';
-import { createCharacterElement, createCommentElement, createDialogElement, createSoundElement, createSubtitleElement, createTitleElement } from './components/Elements.js';
-
-const addCharacter = (srcElement, text = '') => {
-    const newElement = createCharacterElement(text);
-    srcElement.parentNode.insertBefore(newElement, srcElement.nextElementSibling);
-    newElement.focus();
-}
-
-const addDialog = (srcElement, text = '') => {
-    const newElement = createDialogElement(text);
-    srcElement.parentNode.insertBefore(newElement, srcElement.nextElementSibling);
-    newElement.focus();
-}
-
-const addSubtitle = (srcElement, text = '') => {
-    const newElement = createSubtitleElement(text);
-    srcElement.parentNode.insertBefore(newElement, srcElement.nextElementSibling);
-    newElement.focus();
-}
-
-const addTitle = (srcElement, text = '') => {
-    const newElement = createTitleElement(text);
-    srcElement.parentNode.insertBefore(newElement, srcElement.nextElementSibling);
-    newElement.focus();
-}
-
-const addSound = (srcElement, text = '') => {
-    const newElement = createSoundElement(text);
-    srcElement.parentNode.insertBefore(newElement, srcElement.nextElementSibling);
-    const editableSound = [...newElement.children].filter(c => c.contentEditable === 'true')[0];
-    editableSound.focus();
-}
-
-const addComment = (srcElement, text = '') => {
-    const newElement = createCommentElement(text);
-    srcElement.parentNode.insertBefore(newElement, srcElement.nextElementSibling);
-    const editableComment = [...newElement.children].filter(c => c.contentEditable === 'true')[0];
-    editableComment.focus();
-}
+import {
+    addCharacter,
+    addComment,
+    addDialog,
+    addSound,
+    addSubtitle,
+    addTitle,
+    createCharacterElement,
+    createCommentElement,
+    createDialogElement,
+    createSoundElement,
+    createSubtitleElement,
+    createTitleElement
+} from './components/Elements.js';
 
 const handleEnterKeyPress = event => {
     const srcElement = event.srcElement;
@@ -100,7 +75,6 @@ const handleEnterKeyPress = event => {
             console.log('Enter on title');
             if (srcElement.innerText === '') {
                 const previousElement = srcElement.previousElementSibling;
-                // TODO Bug if empty + enter on first line. previous element is null
                 console.log(previousElement);
                 srcElement.remove();
                 addCharacter(previousElement);
@@ -121,11 +95,12 @@ const handleBackspaceKeyPress = event => {
         const elementToRemove = srcElement.className === '' ? srcElement.parentNode : srcElement;
         const previousElement = elementToRemove.previousElementSibling;
         console.log(previousElement);
-        elementToRemove.remove();
-        const previousFocusableElement = previousElement.contentEditable === 'true' ? previousElement : [...previousElement.children].filter(c => c.contentEditable === 'true')[0];
-        previousFocusableElement.focus();
-        setEndOfContenteditable(previousFocusableElement);
-        // TODO Bug si supprime la première ligne et que y a rien au dessus
+        if (previousElement && previousElement.tagName === 'P') {
+            elementToRemove.remove();
+            const previousFocusableElement = previousElement.contentEditable === 'true' ? previousElement : [...previousElement.children].filter(c => c.contentEditable === 'true')[0];
+            previousFocusableElement.focus();
+            setEndOfContenteditable(previousFocusableElement);
+        }
     }
 }
 
